@@ -8,10 +8,11 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import moze_intel.projecte.gameObjs.container.PhilosStoneContainer;
-import moze_intel.projecte.integration.jei.collectors.CollectorRecipeCategory;
+import moze_intel.projecte.gameObjs.ObjHandler;
 import moze_intel.projecte.integration.jei.world_transmute.WorldTransmuteRecipeCategory;
+import moze_intel.projecte.integration.jei.world_transmute.WorldTransmuteRecipeHandler;
 import moze_intel.projecte.utils.WorldTransmutations;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -28,16 +29,18 @@ public class PEJeiPlugin implements IModPlugin
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
-        registry.addRecipeCategories(new WorldTransmuteRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-        registry.addRecipeCategories(new CollectorRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        // todo 1.12
     }
 
     @Override
     public void register(@Nonnull IModRegistry registry)
     {
-        // todo finish this, add alchbag
-        registry.addRecipes(WorldTransmutations.getWorldTransmutations(), WorldTransmuteRecipeCategory.UID);
-        registry.getRecipeTransferRegistry().addRecipeTransferHandler(PhilosStoneContainer.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+        // todo finish this, add alchbag and klein
+        registry.addRecipeCategories(new WorldTransmuteRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeHandlers(new WorldTransmuteRecipeHandler());
+        registry.addRecipes(WorldTransmutations.getWorldTransmutations());
+
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ObjHandler.philosStone), VanillaRecipeCategoryUid.CRAFTING);
     }
 
     @Override
