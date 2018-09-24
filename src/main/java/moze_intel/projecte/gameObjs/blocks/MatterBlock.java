@@ -9,6 +9,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -47,6 +50,12 @@ public class MatterBlock extends Block
 			return 2000000.0F;
 		}
 	}
+	
+	@Override
+    public boolean canEntityDestroy (IBlockState state, IBlockAccess world, BlockPos pos, Entity entity) {
+
+        return !(entity instanceof EntityWither) && !(entity instanceof EntityWitherSkull);
+    }
 	
 	@Override
 	public boolean canHarvestBlock(IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityPlayer player)
